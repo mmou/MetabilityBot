@@ -7,21 +7,19 @@ var twitter = new twitterAPI({
     consumerSecret: '9nAL1DeI7nBtALK4iB3COACdMvhwMHFQBWXNzqL4TyMJN5la44'
 });
 
-var accessToken = "3195001477-eXnqviy4J5vTthK9vaI5aejQsXRjUZtlfwiBp2U"
-var accessTokenSecret = "OcHeshCkMofHW0YWydoHoquJod5D9EzB9xtPzccJIA3Fq"
-
-
 var words = require ('./words.json');
 var wordsAdjs = Object.keys(words)
 
 var bot = {
 
 	intervalId: null,
+	accessToken: "3195001477-eXnqviy4J5vTthK9vaI5aejQsXRjUZtlfwiBp2U",
+	accessTokenSecret: "OcHeshCkMofHW0YWydoHoquJod5D9EzB9xtPzccJIA3Fq",
 
 	run: function(delayMin) {
 		if (!delayMin) delayMin = 60;
 		var delayMillis = delayMin*60*1000  
-		this.intervalId = setInterval(tweet(getRandomSentence), delayMillis);
+		this.intervalId = setInterval(this.tweet(this.getRandomSentence()), delayMillis);
 	},
 
 	kill: function() {
@@ -30,10 +28,10 @@ var bot = {
 
 	tweet: function(status) {
 		twitter.statuses("update", {
-		        status: "Hello world!"
+		        status: status
 		    },
-		    accessToken,
-		    accessTokenSecret,
+		    this.accessToken,
+		    this.accessTokenSecret,
 		    function(error, data, response) {
 		        if (error) {
 		            // something went wrong 
