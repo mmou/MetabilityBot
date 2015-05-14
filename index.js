@@ -19,14 +19,16 @@ var bot = {
 	run: function(delayMin) {
 		if (!delayMin) delayMin = 60;
 		var delayMillis = delayMin*60*1000  
-		this.intervalId = setInterval(this.tweet(this.getRandomSentence()), delayMillis);
+		this.intervalId = setInterval(function(){console.log("HI")}, delayMillis);
 	},
 
 	kill: function() {
 		clearInterval(this.intervalId);
 	},
 
-	tweet: function(status) {
+	tweet: function() {
+		var status = this.getRandomSentence();
+		console.log(status)
 		twitter.statuses("update", {
 		        status: status
 		    },
@@ -64,7 +66,7 @@ app.get('/', function(request, response) {
 });
 
 
-bot.run(0.5)
+bot.run(0.1)
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
