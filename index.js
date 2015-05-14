@@ -19,7 +19,7 @@ var bot = {
 	run: function(delayMin) {
 		if (!delayMin) delayMin = 60;
 		var delayMillis = delayMin*60*1000  
-		this.intervalId = setInterval(function(){console.log("HI")}, delayMillis);
+		this.intervalId = setInterval(this.tweet, delayMillis);
 	},
 
 	kill: function() {
@@ -28,7 +28,6 @@ var bot = {
 
 	tweet: function() {
 		var status = this.getRandomSentence();
-		console.log(status)
 		twitter.statuses("update", {
 		        status: status
 		    },
