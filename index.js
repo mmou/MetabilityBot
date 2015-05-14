@@ -16,23 +16,23 @@ var bot = {
 	accessToken: "3195001477-eXnqviy4J5vTthK9vaI5aejQsXRjUZtlfwiBp2U",
 	accessTokenSecret: "OcHeshCkMofHW0YWydoHoquJod5D9EzB9xtPzccJIA3Fq",
 
-	run: function(delayMin) {
-		if (!delayMin) delayMin = 60;
-		var delayMillis = delayMin*60*1000  
-		this.intervalId = setInterval(this.tweet, delayMillis);
+	getRandomSentence: function() {
+		var adj = wordsAdjs[parseInt(Math.random()*wordsAdjs.length)];
+		return bot.generateSentence(adj);
 	},
 
-	kill: function() {
-		clearInterval(this.intervalId);
+	generateSentence: function(adj) {	
+		var noun = words[adj];
+		return "Is our need for " + noun + " " + adj + "?";
 	},
 
 	tweet: function() {
-		var status = this.getRandomSentence();
+		var status = bot.getRandomSentence();
 		twitter.statuses("update", {
 		        status: status
 		    },
-		    this.accessToken,
-		    this.accessTokenSecret,
+		    bot.accessToken,
+		    bot.accessTokenSecret,
 		    function(error, data, response) {
 		        if (error) {
 		            // something went wrong 
@@ -45,21 +45,19 @@ var bot = {
 		);
 	},
 
-	getRandomSentence: function() {
-		var adj = wordsAdjs[parseInt(Math.random()*wordsAdjs.length)];
-		return this.generateSentence(adj);
+	run: function(delayMin) {
+		if (!delayMin) delayMin = 60;
+		var delayMillis = delayMin*60*1000  
+		bot.intervalId = setInterval(bot.tweet, delayMillis);
 	},
 
-	generateSentence: function(adj) {	
-		var noun = words[adj];
-		return "Is our need for " + noun + " " + adj + "?";
+	kill: function() {
+		clearInterval(bot.intervalId);
 	}	
 
 }
 
 app.set('port', (process.env.PORT || 5000));
-//app.use(express.static(__dirname + '/public'));
-
 app.get('/', function(request, response) {
   response.send('Hello World!');
 });
