@@ -63,7 +63,7 @@ app.get('/', function(request, response) {
 });
 
 
-bot.run(0.1)
+bot.run(60)
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
