@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+app.engine('html', require('ejs').renderFile);
 
 var twitterAPI = require('node-twitter-api');
 var twitter = new twitterAPI({
@@ -59,7 +60,7 @@ var bot = {
 
 app.set('port', (process.env.PORT || 5000));
 app.get('/', function(request, response) {
-  response.send('Hello World!');
+  response.render('index.html');
 });
 
 
