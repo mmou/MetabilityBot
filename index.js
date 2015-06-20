@@ -2,10 +2,11 @@ var express = require('express');
 var app = express();
 app.engine('html', require('ejs').renderFile);
 
+var keys = require ('./keys.js')
 var twitterAPI = require('node-twitter-api');
 var twitter = new twitterAPI({
-    consumerKey: 'M3wD1dk9HlGZ31r99uK8py0TM',
-    consumerSecret: '9nAL1DeI7nBtALK4iB3COACdMvhwMHFQBWXNzqL4TyMJN5la44'
+    consumerKey: keys.consumerKey,
+    consumerSecret: keys.consumerSecret
 });
 
 var words = require ('./words.json');
@@ -14,8 +15,8 @@ var wordsAdjs = Object.keys(words)
 var bot = {
 
 	intervalId: null,
-	accessToken: "3195001477-eXnqviy4J5vTthK9vaI5aejQsXRjUZtlfwiBp2U",
-	accessTokenSecret: "OcHeshCkMofHW0YWydoHoquJod5D9EzB9xtPzccJIA3Fq",
+	accessToken: keys.accessToken,
+	accessTokenSecret: keys.accessTokenSecret,
 
 	getRandomSentence: function() {
 		var adj = wordsAdjs[parseInt(Math.random()*wordsAdjs.length)];
